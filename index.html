@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cristiano Carneiro | cwb.me</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #5a5a5a;
+            --cursor-color: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .terminal {
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .line {
+            margin-bottom: 0.8rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 1.0s; color: var(--accent-color); font-size: 0.9em; }
+        .delay-3 { animation-delay: 1.8s; }
+
+        .prompt::before {
+            content: "guest@cwb.me:~$ ";
+            color: var(--accent-color);
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: var(--cursor-color);
+            vertical-align: middle;
+            margin-left: 5px;
+            animation: blink 1s step-end infinite;
+            opacity: 0;
+            animation-delay: 2.5s; /* Só pisca depois que o texto termina */
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* O "botão" invisível para testar o futuro login */
+        #hidden-trigger {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal">
+        <div class="line delay-1 prompt">whoami</div>
+        <div class="line delay-2">Carregando perfil público...</div>
+        <div class="line delay-3">
+            > Cristiano Carneiro<br>
+            > Engenharia Orientada à Redução de Entropia<br>
+            > Status: Sistema em Standby<span class="cursor" id="active-cursor"></span>
+        </div>
+    </div>
+
+    <div id="hidden-trigger"></div>
+
+    <script>
+        // No futuro, clicar no canto inferior direito acordará o Getulio
+        document.getElementById('hidden-trigger').addEventListener('dblclick', function() {
+            const cursor = document.getElementById('active-cursor');
+            cursor.style.display = 'none';
+            
+            const terminal = document.querySelector('.terminal');
+            const authLine = document.createElement('div');
+            authLine.className = 'line prompt';
+            authLine.style.marginTop = '1.5rem';
+            authLine.style.color = '#ffaa00';
+            authLine.innerHTML = 'init getulio_protocol... <br>[ ERROR: Handshake criptográfico ausente. ]<span class="cursor" style="opacity:1; animation-delay:0s;"></span>';
+            
+            terminal.appendChild(authLine);
+        });
+    </script>
+</body>
+</html>
