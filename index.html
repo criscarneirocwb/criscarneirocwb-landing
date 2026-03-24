@@ -33,7 +33,6 @@
             padding: 2rem;
         }
 
-        /* --- NOVA SEÇÃO: O CÓRTEX --- */
         .meta-header {
             text-align: center;
             margin-bottom: 4rem;
@@ -56,6 +55,7 @@
             color: var(--accent-color);
             letter-spacing: 0.3rem;
             margin-top: 0.5rem;
+            transition: opacity 0.5s ease;
         }
 
         @keyframes dropIn {
@@ -69,7 +69,6 @@
             0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
             50% { text-shadow: 0 0 25px rgba(255, 255, 255, 0.5); }
         }
-        /* ---------------------------- */
 
         .line {
             margin-bottom: 0.8rem;
@@ -78,7 +77,7 @@
             animation: fadeIn 0.5s ease forwards;
         }
 
-        .delay-1 { animation-delay: 0.8s; } /* Ajustado para esperar o cabeçalho */
+        .delay-1 { animation-delay: 0.8s; }
         .delay-2 { animation-delay: 1.6s; color: var(--accent-color); font-size: 0.9em; }
         .delay-3 { animation-delay: 2.4s; }
 
@@ -119,6 +118,10 @@
             height: 50px;
             cursor: default;
         }
+        
+        .lang-fade {
+            transition: opacity 0.5s ease;
+        }
     </style>
 </head>
 <body>
@@ -126,21 +129,65 @@
     <div class="terminal">
         <div class="meta-header">
             <div class="meta-title">[ META_CÓRTEX ]</div>
-            <div class="meta-subtitle">SISTEMA OPERATIVO COGNITIVO</div>
+            <div class="meta-subtitle" id="lang-subtitle">SISTEMA OPERATIVO COGNITIVO</div>
         </div>
 
         <div class="line delay-1 prompt">whoami</div>
-        <div class="line delay-2">Carregando perfil público...</div>
+        <div class="line delay-2" id="lang-loading">Carregando perfil público...</div>
         <div class="line delay-3">
             > Cristiano Carneiro<br>
-            > Engenharia Orientada à Redução de Entropia<br>
-            > Status: Deamons loaded and running...<span class="cursor" id="active-cursor"></span>
+            > <span class="lang-fade" id="lang-eng">Engenharia Orientada à Redução de Entropia</span><br>
+            > <span class="lang-fade" id="lang-status">Status: Daemons loaded and running...</span><span class="cursor" id="active-cursor"></span>
         </div>
     </div>
 
     <div id="hidden-trigger"></div>
 
     <script>
+        // Dicionário de Estado
+        const dict = {
+            pt: {
+                subtitle: "SISTEMA OPERATIVO COGNITIVO",
+                loading: "Carregando perfil público...",
+                eng: "Engenharia Orientada à Redução de Entropia",
+                status: "Status: Daemons loaded and running..."
+            },
+            en: {
+                subtitle: "COGNITIVE OPERATING SYSTEM",
+                loading: "Loading public profile...",
+                eng: "Entropy Reduction Oriented Engineering",
+                status: "Status: Daemons loaded and running..."
+            }
+        };
+
+        let currentLang = 'pt';
+        const elements = {
+            subtitle: document.getElementById('lang-subtitle'),
+            loading: document.getElementById('lang-loading'),
+            eng: document.getElementById('lang-eng'),
+            status: document.getElementById('lang-status')
+        };
+
+        // Alternador de Idioma a cada 6 segundos
+        setInterval(() => {
+            // Efeito de fade out
+            Object.values(elements).forEach(el => el.style.opacity = 0);
+            
+            setTimeout(() => {
+                currentLang = currentLang === 'pt' ? 'en' : 'pt';
+                const langData = dict[currentLang];
+                
+                elements.subtitle.textContent = langData.subtitle;
+                elements.loading.textContent = langData.loading;
+                elements.eng.textContent = langData.eng;
+                elements.status.textContent = langData.status;
+                
+                // Efeito de fade in
+                Object.values(elements).forEach(el => el.style.opacity = 1);
+            }, 500); // Tempo de espera para o texto trocar enquanto está invisível
+        }, 6000);
+
+        // Gatilho do Getulio Protocol
         document.getElementById('hidden-trigger').addEventListener('dblclick', function() {
             const cursor = document.getElementById('active-cursor');
             cursor.style.display = 'none';
