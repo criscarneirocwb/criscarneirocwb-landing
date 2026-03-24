@@ -41,8 +41,18 @@
             animation: dropIn 1s ease forwards, pulse 4s infinite 1s;
         }
 
-        .meta-title {
+        .meta-name {
             font-size: 2.8rem;
+            font-weight: bold;
+            font-style: italic;
+            color: var(--accent-color);
+            letter-spacing: 0.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .meta-title {
+            font-size: 2rem;
             font-weight: bold;
             color: var(--meta-color);
             letter-spacing: 0.5rem;
@@ -128,7 +138,8 @@
 
     <div class="terminal">
         <div class="meta-header">
-            <div class="meta-title">[ META_CÓRTEX ]</div>
+            <div class="meta-name">criscarneirocwb</div>
+            <div class="meta-title"  id="lang-title">[cortex inovador]</div>
             <div class="meta-subtitle" id="lang-subtitle">SISTEMA OPERACIONAL COGNITIVO</div>
         </div>
 
@@ -147,12 +158,14 @@
         // Dicionário de Estado
         const dict = {
             pt: {
+                title: "[cortex inovador]",
                 subtitle: "SISTEMA OPERACIONAL COGNITIVO",
                 loading: "Carregando perfil público...",
                 eng: "Engenharia Orientada à Redução de Entropia",
                 status: "Status: Daemons loaded and running..."
             },
             en: {
+                title: "[ideation cortex]",
                 subtitle: "COGNITIVE OPERATING SYSTEM",
                 loading: "Loading public profile...",
                 eng: "Entropy Reduction Oriented Engineering",
@@ -162,6 +175,7 @@
 
         let currentLang = 'pt';
         const elements = {
+            title: document.getElementById('lang-title'),
             subtitle: document.getElementById('lang-subtitle'),
             loading: document.getElementById('lang-loading'),
             eng: document.getElementById('lang-eng'),
@@ -177,6 +191,7 @@
                 currentLang = currentLang === 'pt' ? 'en' : 'pt';
                 const langData = dict[currentLang];
                 
+				elements.title.textContent = langData.title;
                 elements.subtitle.textContent = langData.subtitle;
                 elements.loading.textContent = langData.loading;
                 elements.eng.textContent = langData.eng;
