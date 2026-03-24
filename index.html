@@ -10,6 +10,7 @@
             --text-color: #e0e0e0;
             --accent-color: #5a5a5a;
             --cursor-color: #ffffff;
+            --meta-color: #ffffff;
         }
 
         body, html {
@@ -28,9 +29,47 @@
 
         .terminal {
             width: 90%;
-            max-width: 600px;
+            max-width: 650px;
             padding: 2rem;
         }
+
+        /* --- NOVA SEÇÃO: O CÓRTEX --- */
+        .meta-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: dropIn 1s ease forwards, pulse 4s infinite 1s;
+        }
+
+        .meta-title {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: var(--meta-color);
+            letter-spacing: 0.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .meta-subtitle {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            letter-spacing: 0.3rem;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes dropIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+            50% { text-shadow: 0 0 25px rgba(255, 255, 255, 0.5); }
+        }
+        /* ---------------------------- */
 
         .line {
             margin-bottom: 0.8rem;
@@ -39,9 +78,9 @@
             animation: fadeIn 0.5s ease forwards;
         }
 
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 1.0s; color: var(--accent-color); font-size: 0.9em; }
-        .delay-3 { animation-delay: 1.8s; }
+        .delay-1 { animation-delay: 0.8s; } /* Ajustado para esperar o cabeçalho */
+        .delay-2 { animation-delay: 1.6s; color: var(--accent-color); font-size: 0.9em; }
+        .delay-3 { animation-delay: 2.4s; }
 
         .prompt::before {
             content: "guest@criscarneirocwb.me:~$ ";
@@ -57,7 +96,7 @@
             margin-left: 5px;
             animation: blink 1s step-end infinite;
             opacity: 0;
-            animation-delay: 2.5s; /* Só pisca depois que o texto termina */
+            animation-delay: 3.2s;
         }
 
         @keyframes fadeIn {
@@ -72,7 +111,6 @@
             50% { opacity: 0; }
         }
 
-        /* O "botão" invisível para testar o futuro login */
         #hidden-trigger {
             position: fixed;
             bottom: 0;
@@ -86,6 +124,11 @@
 <body>
 
     <div class="terminal">
+        <div class="meta-header">
+            <div class="meta-title">[ META_CÓRTEX ]</div>
+            <div class="meta-subtitle">SISTEMA OPERATIVO COGNITIVO</div>
+        </div>
+
         <div class="line delay-1 prompt">whoami</div>
         <div class="line delay-2">Carregando perfil público...</div>
         <div class="line delay-3">
@@ -98,7 +141,6 @@
     <div id="hidden-trigger"></div>
 
     <script>
-        // No futuro, clicar no canto inferior direito acordará o Getulio
         document.getElementById('hidden-trigger').addEventListener('dblclick', function() {
             const cursor = document.getElementById('active-cursor');
             cursor.style.display = 'none';
